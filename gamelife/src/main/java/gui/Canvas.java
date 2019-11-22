@@ -6,6 +6,8 @@ import static gamelogic.Specification.lifeGeneration;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 /**
@@ -15,9 +17,9 @@ import javax.swing.JPanel;
  */
 // paint on the canvas
 public class Canvas extends JPanel {
-  //   Graphics g;
 
-  //  public Canvas() {
+ //   public Canvas() {
+
   //    this.g = g;
   //    addMouseListener(
   //        new MouseAdapter() {
@@ -29,12 +31,24 @@ public class Canvas extends JPanel {
   //                e.getX() * SHAPE_RADIUS, e.getY() * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
   //          }
   //        });
-  //  }
+  // }
 
   @Override
   public void paint(Graphics g) {
     super.paint(g);
     g.setColor(Color.MAGENTA);
+    addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        System.out.println(e.getX() + " " + e.getY());
+        for (int x = 0; x < LIFE_SIZE; x++) {
+          for (int y = 0; y < LIFE_SIZE; y++) {
+            if (lifeGeneration[e.getX()][e.getY()]) {
+              g.fillRect(e.getX() * SHAPE_RADIUS, e.getY() * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
+
+      }}}}
+    });
     for (int x = 0; x < LIFE_SIZE; x++) {
       for (int y = 0; y < LIFE_SIZE; y++) {
         if (lifeGeneration[x][y]) {
