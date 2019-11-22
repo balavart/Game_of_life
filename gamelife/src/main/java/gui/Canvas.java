@@ -4,11 +4,14 @@ import static gamelogic.Specification.LIFE_SIZE;
 import static gamelogic.Specification.SHAPE_RADIUS;
 import static gamelogic.Specification.lifeGeneration;
 
+import gamelogic.Life;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javafx.scene.input.MouseButton;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
 
 /**
  * @author Vardan Balayan
@@ -18,41 +21,15 @@ import javax.swing.JPanel;
 // paint on the canvas
 public class Canvas extends JPanel {
 
- //   public Canvas() {
-
-  //    this.g = g;
-  //    addMouseListener(
-  //        new MouseAdapter() {
-  //          @Override
-  //          public void mouseClicked(MouseEvent e) {
-  //            super.mouseClicked(e);
-  //            System.out.println(e.getX() + " " + e.getY());
-  //            g.fillOval(
-  //                e.getX() * SHAPE_RADIUS, e.getY() * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
-  //          }
-  //        });
-  // }
-
   @Override
   public void paint(Graphics g) {
     super.paint(g);
     g.setColor(Color.MAGENTA);
-    addMouseListener(new MouseAdapter() {
-      @Override
-      public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
-        System.out.println(e.getX() + " " + e.getY());
-        for (int x = 0; x < LIFE_SIZE; x++) {
-          for (int y = 0; y < LIFE_SIZE; y++) {
-            if (lifeGeneration[e.getX()][e.getY()]) {
-              g.fillRect(e.getX() * SHAPE_RADIUS, e.getY() * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
 
-      }}}}
-    });
     for (int x = 0; x < LIFE_SIZE; x++) {
       for (int y = 0; y < LIFE_SIZE; y++) {
         if (lifeGeneration[x][y]) {
-          g.fillRect(x * SHAPE_RADIUS, y * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
+          g.fillOval(x * SHAPE_RADIUS, y * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
         }
       }
     }

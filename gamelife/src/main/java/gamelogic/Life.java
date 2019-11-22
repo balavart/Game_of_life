@@ -1,9 +1,11 @@
 package gamelogic;
 
+import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener;
 import static gamelogic.Specification.BUTTON_PANEL_HEIGHT;
 import static gamelogic.Specification.FIELD_SIZE;
 import static gamelogic.Specification.LIFE_SIZE;
 import static gamelogic.Specification.NAME_OF_GAME;
+import static gamelogic.Specification.SHAPE_RADIUS;
 import static gamelogic.Specification.lifeGeneration;
 import static gamelogic.Specification.nextGeneration;
 import static gamelogic.Specification.timeDelay;
@@ -13,6 +15,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,6 +42,22 @@ public class Life {
 
     canvasPanel = new Canvas();
     canvasPanel.setBackground(Color.pink);
+    canvasPanel.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mousePressed(MouseEvent e) {
+        super.mousePressed(e);
+        if (goNextGeneration){
+          return;
+        }
+        int x = e.getX()/SHAPE_RADIUS;
+        int y = e.getY()/SHAPE_RADIUS;
+        lifeGeneration[x][y]=true;
+        nextGeneration[x][y]=true;
+
+        canvasPanel.repaint();
+
+      }
+    });
 
     final JButton startButton = new JButton("Start");
     final JButton stopButton = new JButton("Stop");
@@ -91,11 +111,9 @@ public class Life {
             startButton.setEnabled(true);
             stopButton.setEnabled(false);
             clearButton.setEnabled(true);
-            for (int x = 0; x < LIFE_SIZE; x++) {
-              for (int y = 0; y < LIFE_SIZE; y++) {
-                lifeGeneration[x][y] = false;
-              }
-            }
+
+            lifeGeneration = new boolean[LIFE_SIZE][LIFE_SIZE];
+
             canvasPanel.repaint();
           }
         });
@@ -108,10 +126,11 @@ public class Life {
     frame.getContentPane().add(BorderLayout.CENTER, canvasPanel);
     frame.getContentPane().add(BorderLayout.SOUTH, buttonsPanel);
 
+
     // бесконечная петля жизни
     while (true) {
       if (goNextGeneration) {
-        processOfLife();
+        lifeProcess();
         canvasPanel.repaint();
         try {
           Thread.sleep(timeDelay);
@@ -143,7 +162,7 @@ public class Life {
   }
 
   // основной процесс жизни
-  void processOfLife() {
+  public void lifeProcess() {
     for (int x = 0; x < LIFE_SIZE; x++) {
       for (int y = 0; y < LIFE_SIZE; y++) {
         int count = countNeighbors(x, y);
