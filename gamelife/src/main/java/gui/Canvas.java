@@ -1,17 +1,10 @@
 package gui;
 
-import static gamelogic.Specification.LIFE_SIZE;
-import static gamelogic.Specification.SHAPE_RADIUS;
-import static gamelogic.Specification.lifeGeneration;
-
-import gamelogic.Life;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javafx.scene.input.MouseButton;
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputAdapter;
 
 /**
  * @author Vardan Balayan
@@ -21,15 +14,48 @@ import javax.swing.event.MouseInputAdapter;
 // paint on the canvas
 public class Canvas extends JPanel {
 
+  public Canvas() {
+    this.addMouseListener(
+        new MouseAdapter() {
+          @Override
+          public void mousePressed(MouseEvent e) {
+            super.mousePressed(e);
+            coordinateAssignment(e);
+          }
+        });
+  }
+
+  @Override
+  public Color getBackground() {
+    return Color.PINK;
+  }
+
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    g.setColor(Color.MAGENTA);
+    g.setColor(Color.RED);
+    paintShapes(g);
+  }
 
-    for (int x = 0; x < LIFE_SIZE; x++) {
-      for (int y = 0; y < LIFE_SIZE; y++) {
-        if (lifeGeneration[x][y]) {
-          g.fillOval(x * SHAPE_RADIUS, y * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
+  // клик создания фигуры
+  public void coordinateAssignment(MouseEvent e) {
+    if (Specification.goNextGeneration) {
+      return;
+    }
+    int x = e.getX() / Specification.shapeRadius;
+    int y = e.getY() / Specification.shapeRadius;
+    Specification.lifeGeneration[x][y] = true;
+    Specification.lifeGeneration[x][y] = true;
+
+    this.repaint();
+  }
+
+  // рисование на конвасе
+  public void paintShapes(Graphics g) {
+    for (int x = 0; x < Specification.lifeSize; x++) {
+      for (int y = 0; y < Specification.lifeSize; y++) {
+        if (Specification.lifeGeneration[x][y]) {
+          g.fillOval(x * Specification.shapeRadius, y * Specification.shapeRadius, Specification.shapeRadius, Specification.shapeRadius);
         }
       }
     }
