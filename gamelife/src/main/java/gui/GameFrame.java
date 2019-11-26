@@ -1,5 +1,6 @@
 package gui;
 
+import config.Specification;
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 
@@ -16,7 +17,7 @@ public class GameFrame extends JFrame {
   public GameFrame() throws HeadlessException {
     this.setVisible(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setSize(Specification.fieldSize, Specification.fieldSize + BUTTON_PANEL_HEIGHT);
+    this.setSize(Specification.FIELD_SIZE, Specification.FIELD_SIZE + BUTTON_PANEL_HEIGHT);
     this.setLocationRelativeTo(null);
     this.setResizable(false);
   }

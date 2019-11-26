@@ -1,4 +1,4 @@
-package gui;
+package gui.buttons;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -9,6 +9,10 @@ import javax.swing.JButton;
  * @created 11/25/2019
  */
 public class StopButton extends JButton {
+
+  public StopButton() {
+    this.setEnabled(false);
+  }
 
   @Override
   public String getText() {

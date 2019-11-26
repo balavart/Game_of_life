@@ -1,4 +1,4 @@
-package gui;
+package gui.buttons;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -8,15 +8,15 @@ import javax.swing.JButton;
  * @version 1.8
  * @created 11/25/2019
  */
-public class StartButton extends JButton {
+public class ClearButton extends JButton {
 
   @Override
   public String getText() {
-    return "Start";
+    return "Clear";
   }
 
   @Override
   public Color getBackground() {
-    return Color.GREEN;
+    return Color.GRAY;
   }
 }

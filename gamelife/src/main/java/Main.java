@@ -1,10 +1,7 @@
-import gui.ButtonsMenuBar;
 import gui.Canvas;
-import gui.ClearButton;
 import gui.GameFrame;
-import gui.GameWindow;
-import gui.StartButton;
-import gui.StopButton;
+import gui.buttons.ButtonsMenuBar;
+import gui.controller.GameWindow;
 
 /**
  * @author Vardan Balayan
@@ -16,11 +13,10 @@ public class Main {
 
     GameFrame frame = new GameFrame();
     Canvas canvas = new Canvas();
-    StartButton startButton = new StartButton();
-    StopButton stopButton = new StopButton();
-    ClearButton clearButton = new ClearButton();
-    ButtonsMenuBar buttonsMenuBar =
-        new ButtonsMenuBar(startButton, stopButton, clearButton, canvas);
+    ButtonsMenuBar buttonsMenuBar = new ButtonsMenuBar(canvas);
+
     GameWindow window = new GameWindow(frame, buttonsMenuBar, canvas);
+    window.startButtonActionListeners();
+    window.startEndlessLifeSpan();
   }
 }
