@@ -1,11 +1,12 @@
 package gui.controller;
 
-import config.Specification;
+import static config.Specification.goNextGeneration;
+import static config.Specification.lifeSize;
+
 import gui.Canvas;
 import gui.GameField;
 import gui.GameFrame;
 import gui.buttons.ButtonsMenuBar;
-import gui.buttons.StartButton;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +35,8 @@ public class GameWindow extends JFrame {
 
     frame.getContentPane().add(BorderLayout.SOUTH, buttonsPanel);
     frame.getContentPane().add(BorderLayout.CENTER, canvas);
+
+    startButtonActionListeners();
   }
 
   // включение действий для кнопок
@@ -48,9 +51,10 @@ public class GameWindow extends JFrame {
     return new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        ((StartButton) e.getSource()).setRunningText();
+        buttonsPanel.getStartButton().setText("Running");
         buttonsPanel.getStartButton().setEnabled(false);
         buttonsPanel.getStopButton().setEnabled(true);
+        buttonsPanel.getClearButton().setEnabled(false);
         gameState = 1;
 
         System.out.println("Старт функция"); // для проверки
@@ -63,7 +67,7 @@ public class GameWindow extends JFrame {
     return new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        Specification.goNextGeneration = !Specification.goNextGeneration;
+        goNextGeneration = !goNextGeneration;
         buttonsPanel.getStopButton().setEnabled(false);
         // todo: разобраться как вызвать имя текста из объекта кнопки
         buttonsPanel.getStartButton().setText("Start");
@@ -96,14 +100,14 @@ public class GameWindow extends JFrame {
       if (gameState == 1) {
         gameState = 2;
         if (gameField.isEmpty()) {
-          Specification.goNextGeneration = !Specification.goNextGeneration;
+          goNextGeneration = !goNextGeneration;
           gameField.fillingByShapes();
         } else {
-          Specification.goNextGeneration = !Specification.goNextGeneration;
+          goNextGeneration = !goNextGeneration;
           gameField.shapesCleaning();
         }
       }
-      if (Specification.goNextGeneration) {
+      if (goNextGeneration) {
 
         System.out.println("В бесконечном цикле"); // для проверки
 
@@ -116,9 +120,15 @@ public class GameWindow extends JFrame {
         }
       }
       if (gameState == 3) {
-        gameField.setLifeGeneration(new boolean[Specification.lifeSize][Specification.lifeSize]);
+        gameField.setLifeGeneration(new boolean[lifeSize][lifeSize]);
+        gameField.setNextGeneration(new boolean[lifeSize][lifeSize]);
         gameState = 2;
       }
     }
   }
+
+  public GameField getGameField() {
+    return gameField;
+  }
+
 }

@@ -1,8 +1,9 @@
 package gui;
 
+import static config.Specification.goNextGeneration;
 import static config.Specification.lifeSize;
+import static config.Specification.shapeRadius;
 
-import config.Specification;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -50,15 +51,20 @@ public class Canvas extends JPanel {
   // todo: перенести в сервис отрисовки
   // клик создания фигуры
   public void coordinateAssignment(MouseEvent e) {
-    if (Specification.goNextGeneration) {
+    if (goNextGeneration) {
       return;
     }
-    int x = e.getX() / Specification.shapeRadius;
-    int y = e.getY() / Specification.shapeRadius;
-    gameField.setLifeGeneration(x, y, true);
-    gameField.setNextGeneration(x, y, true);
-
-    repaint();
+    int x = e.getX() / shapeRadius;
+    int y = e.getY() / shapeRadius;
+    if (gameField.isEmpty()) {
+      gameField.setLifeGeneration(x, y, true);
+      gameField.setNextGeneration(x, y, true);
+      repaint();
+    } else {
+      gameField.setNullLifeGeneration(x, y, gameField.getLifeGeneration());
+      gameField.setNextGeneration(x, y, true);
+      repaint();
+    }
   }
 
   // todo: перенести в сервис отрисовки
@@ -67,11 +73,7 @@ public class Canvas extends JPanel {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
         if (gameField.getLifeGeneration()[x][y]) {
-          g.fillOval(
-              x * Specification.shapeRadius,
-              y * Specification.shapeRadius,
-              Specification.shapeRadius,
-              Specification.shapeRadius);
+          g.fillOval(x * shapeRadius, y * shapeRadius, shapeRadius, shapeRadius);
         }
       }
     }
