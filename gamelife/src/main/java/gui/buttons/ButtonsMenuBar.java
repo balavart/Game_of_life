@@ -10,7 +10,6 @@ import javax.swing.JPanel;
  * @created 25.11.2019
  */
 public class ButtonsMenuBar extends JPanel {
-
   JButton startButton;
   JButton stopButton;
   JButton clearButton;

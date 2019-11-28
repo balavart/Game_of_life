@@ -17,6 +17,6 @@ public class ClearButton extends JButton {
 
   @Override
   public Color getBackground() {
-    return Color.GRAY;
+    return Color.LIGHT_GRAY;
   }
 }

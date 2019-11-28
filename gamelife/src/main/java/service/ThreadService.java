@@ -16,13 +16,14 @@ import java.util.concurrent.Executors;
  * @created 11/28/2019
  */
 public class ThreadService {
+  // todo: убрать отсюда
   private GameFrame frame = new GameFrame();
   private Canvas canvas = new Canvas();
   private ButtonsMenuBar buttonsMenuBar = new ButtonsMenuBar(canvas);
-  private GameController window = new GameController(frame, buttonsMenuBar, canvas, this);
+  private GameController controller = new GameController(frame, buttonsMenuBar, canvas);
   private ExecutorService executorService = Executors.newFixedThreadPool(3);
-  private LifeThread lifeThread = new LifeThread(window.getGameField());
-  private DeathThread deathThread = new DeathThread(window.getGameField());
+  private LifeThread lifeThread = new LifeThread(controller.getGameField());
+  private DeathThread deathThread = new DeathThread(controller.getGameField());
   private DisplayThread displayThread = new DisplayThread(canvas);
 
   private int timeDelay = 100;
@@ -32,14 +33,14 @@ public class ThreadService {
     while (true) {
 
       try {
-        while(!Specification.goNextGeneration) {
+        while (!Specification.goNextGeneration) {
           Thread.sleep(timeDelay);
         }
-          executorService.invokeAll(Arrays.asList(lifeThread, deathThread));
-          executorService.invokeAll(Collections.singletonList(displayThread));
-          canvas.repaint();
-          Thread.sleep(timeDelay);
-
+        executorService.invokeAll(Arrays.asList(lifeThread, deathThread));
+        executorService.invokeAll(Collections.singletonList(displayThread));
+        // todo: перенести в поток
+        canvas.repaint();
+        Thread.sleep(timeDelay);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

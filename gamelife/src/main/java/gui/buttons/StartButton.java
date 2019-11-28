@@ -10,9 +10,8 @@ import javax.swing.JButton;
  */
 public class StartButton extends JButton {
 
-  @Override
-  public String getText() {
-    return "Start";
+  public StartButton() {
+    super("Start");
   }
 
   @Override

@@ -10,7 +10,6 @@ import java.util.concurrent.Callable;
  * @created 11/27/2019
  */
 public class DisplayThread implements Callable<Boolean> {
-
   private Canvas canvas;
   private Graphics g;
 

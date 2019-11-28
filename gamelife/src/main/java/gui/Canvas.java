@@ -1,8 +1,7 @@
 package gui;
 
-import static config.Specification.goNextGeneration;
+import static config.Specification.SHAPE_RADIUS;
 import static config.Specification.lifeSize;
-import static config.Specification.shapeRadius;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,17 +16,19 @@ import javax.swing.JPanel;
  */
 // paint on the canvas
 public class Canvas extends JPanel {
-
   private GameField gameField;
 
-  // todo: перенести mouseListener в отдельный класс
   public Canvas() {
     this.addMouseListener(
         new MouseAdapter() {
           @Override
           public void mousePressed(MouseEvent e) {
             super.mousePressed(e);
-            coordinateAssignment(e);
+            int x = e.getX() / SHAPE_RADIUS;
+            int y = e.getY() / SHAPE_RADIUS;
+            gameField.toggleLifeGeneration(x, y);
+            gameField.setNextGeneration(x, y, gameField.getShapeState(x, y));
+            repaint();
           }
         });
   }
@@ -41,43 +42,16 @@ public class Canvas extends JPanel {
   public void paint(Graphics g) {
     super.paint(g);
     g.setColor(Color.RED);
-    paintShapes(g);
+    for (int x = 0; x < lifeSize; x++) {
+      for (int y = 0; y < lifeSize; y++) {
+        if (gameField.getLifeGeneration()[x][y]) {
+          g.fillOval(x * SHAPE_RADIUS, y * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
+        }
+      }
+    }
   }
 
   public void setGameField(GameField gameField) {
     this.gameField = gameField;
-  }
-
-  // todo: перенести в сервис отрисовки
-  // клик создания фигуры
-  public void coordinateAssignment(MouseEvent e) {
-    if (goNextGeneration) {
-      return;
-    }
-      int x = e.getX() / shapeRadius;
-      int y = e.getY() / shapeRadius;
-      if (gameField.isEmpty()) {
-        goNextGeneration=false;
-        gameField.setLifeGeneration(x, y, true);
-        gameField.setNextGeneration(x, y, true);
-        repaint();
-      } else {
-        gameField.setNullLifeGeneration(x, y, gameField.getLifeGeneration());
-        gameField.setNextGeneration(x, y, true);
-        repaint();
-      }
-    }
-
-
-  // todo: перенести в сервис отрисовки
-  // рисование на конвасе
-  public void paintShapes(Graphics g) {
-    for (int x = 0; x < lifeSize; x++) {
-      for (int y = 0; y < lifeSize; y++) {
-        if (gameField.getLifeGeneration()[x][y]) {
-          g.fillOval(x * shapeRadius, y * shapeRadius, shapeRadius, shapeRadius);
-        }
-      }
-    }
   }
 }

@@ -1,6 +1,5 @@
 package service;
 
-import config.Specification;
 import gui.GameField;
 import java.util.concurrent.Callable;
 
@@ -10,7 +9,6 @@ import java.util.concurrent.Callable;
  * @created 11/27/2019
  */
 public class LifeThread implements Callable<Boolean> {
-
   private GameField gameField;
 
   public LifeThread(GameField gameField) {
@@ -19,7 +17,7 @@ public class LifeThread implements Callable<Boolean> {
 
   @Override
   public Boolean call() {
-    gameField.shapeStateChoice(Specification.choiceBorn);
+    gameField.shapesBorn();
     return true;
   }
 }

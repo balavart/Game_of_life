@@ -1,6 +1,5 @@
 package gui;
 
-import static config.Specification.SHAPE_FULLNESS;
 import static config.Specification.lifeSize;
 
 /**
@@ -9,33 +8,28 @@ import static config.Specification.lifeSize;
  * @created 11/26/2019
  */
 public class GameField {
-
-  private volatile boolean[][] lifeGeneration = new boolean[lifeSize][lifeSize];
-  private volatile boolean[][] nextGeneration = new boolean[lifeSize][lifeSize];
-
+  private boolean[][] lifeGeneration = new boolean[lifeSize][lifeSize];
+  private boolean[][] nextGeneration = new boolean[lifeSize][lifeSize];
+  private final int shapeFullness = 10;
 
   public boolean[][] getLifeGeneration() {
     return lifeGeneration;
+  }
+
+  public boolean getShapeState(int x, int y) {
+    return lifeGeneration[x][y];
   }
 
   public void setLifeGeneration(boolean[][] lifeGeneration) {
     this.lifeGeneration = lifeGeneration;
   }
 
-  public void setNullLifeGeneration(int x, int y, boolean[][] lifeGeneration) {
-    this.lifeGeneration[x][y] = !lifeGeneration[x][y];
-  }
-
-  public void setNextGeneration(int x, int y, boolean[][] generation) {
-    this.nextGeneration[x][y] = generation[x][y];
+  public void toggleLifeGeneration(int x, int y) {
+    this.lifeGeneration[x][y] = !this.lifeGeneration[x][y];
   }
 
   public void setNextGeneration(boolean[][] nextGeneration) {
     this.nextGeneration = nextGeneration;
-  }
-
-  public void setLifeGeneration(int x, int y, boolean state) {
-    this.lifeGeneration[x][y] = state;
   }
 
   public void setNextGeneration(int x, int y, boolean state) {
@@ -74,9 +68,8 @@ public class GameField {
     return count;
   }
 
-
   // рождение фигур
-  public void shapesBorn() {
+  public synchronized void shapesBorn() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
         int count = countNeighbors(x, y);
@@ -87,7 +80,7 @@ public class GameField {
   }
 
   // смерть фигур
-  public void shapesDeath() {
+  public synchronized void shapesDeath() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
         int count = countNeighbors(x, y);
@@ -95,20 +88,9 @@ public class GameField {
         nextGeneration[x][y] = ((count >= 2) && (count <= 4)) && nextGeneration[x][y];
       }
     }
+    // todo: не здесь должен вызываться (мб отрисовка)
     for (int x = 0; x < lifeSize; x++) {
       System.arraycopy(nextGeneration[x], 0, lifeGeneration[x], 0, lifeSize);
-    }
-  }
-
-  // для выбора методов жизни или смерти
-  public synchronized void shapeStateChoice(String stateName) {
-    if (stateName.equals("Life")) {
-      shapesBorn();
-      System.out.println("life");
-    }
-    if(stateName.equals("Death")) {
-      shapesDeath();
-      System.out.println("death");
     }
   }
 
@@ -116,7 +98,7 @@ public class GameField {
   public void fillingByShapes() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
-        lifeGeneration[x][y] = (Math.random()) * 100 < SHAPE_FULLNESS;
+        lifeGeneration[x][y] = (Math.random()) * 100 < shapeFullness;
       }
     }
   }

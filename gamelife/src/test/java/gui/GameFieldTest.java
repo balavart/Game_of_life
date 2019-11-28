@@ -1,10 +1,8 @@
 package gui;
 
-import static config.Specification.lifeSize;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AssertionsKt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * @created 11/28/2019
  */
 class GameFieldTest {
-  private GameField gameField = new GameField();
+  private GameField gameFieldTest = new GameField();
 
   @BeforeEach
   void setUp() {}
@@ -29,10 +27,8 @@ class GameFieldTest {
       {true, true, true},
       {true, true, true}
     };
-    gameField.setLifeGeneration(test);
-    gameField.getLifeGeneration();
-    assertEquals(8, gameField.countNeighbors(1, 1));
+    gameFieldTest.setLifeGeneration(test);
+    gameFieldTest.getLifeGeneration();
+    assertEquals(8, gameFieldTest.countNeighbors(1, 1));
   }
-
-
 }
