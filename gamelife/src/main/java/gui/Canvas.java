@@ -54,18 +54,20 @@ public class Canvas extends JPanel {
     if (goNextGeneration) {
       return;
     }
-    int x = e.getX() / shapeRadius;
-    int y = e.getY() / shapeRadius;
-    if (gameField.isEmpty()) {
-      gameField.setLifeGeneration(x, y, true);
-      gameField.setNextGeneration(x, y, true);
-      repaint();
-    } else {
-      gameField.setNullLifeGeneration(x, y, gameField.getLifeGeneration());
-      gameField.setNextGeneration(x, y, true);
-      repaint();
+      int x = e.getX() / shapeRadius;
+      int y = e.getY() / shapeRadius;
+      if (gameField.isEmpty()) {
+        goNextGeneration=false;
+        gameField.setLifeGeneration(x, y, true);
+        gameField.setNextGeneration(x, y, true);
+        repaint();
+      } else {
+        gameField.setNullLifeGeneration(x, y, gameField.getLifeGeneration());
+        gameField.setNextGeneration(x, y, true);
+        repaint();
+      }
     }
-  }
+
 
   // todo: перенести в сервис отрисовки
   // рисование на конвасе

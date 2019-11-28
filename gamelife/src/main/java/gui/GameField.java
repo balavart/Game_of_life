@@ -10,8 +10,8 @@ import static config.Specification.lifeSize;
  */
 public class GameField {
 
-  private boolean[][] lifeGeneration = new boolean[lifeSize][lifeSize];
-  private boolean[][] nextGeneration = new boolean[lifeSize][lifeSize];
+  private volatile boolean[][] lifeGeneration = new boolean[lifeSize][lifeSize];
+  private volatile boolean[][] nextGeneration = new boolean[lifeSize][lifeSize];
 
 
   public boolean[][] getLifeGeneration() {
@@ -74,22 +74,6 @@ public class GameField {
     return count;
   }
 
-  // основной процесс жизни
-  public void lifeProcess() {
-    for (int x = 0; x < lifeSize; x++) {
-      for (int y = 0; y < lifeSize; y++) {
-        int count = countNeighbors(x, y);
-        // nextGeneration[x][y] = lifeGeneration[x][y];
-        // если 3 пустых соседа вокруг пустых клеток - клетка становится живой
-        nextGeneration[x][y] = (count == 3) || nextGeneration[x][y];
-        // если ячейка имеет менее 2 или более 3 соседей - она умрет
-        nextGeneration[x][y] = ((count >= 2) && (count <= 4)) && nextGeneration[x][y];
-      }
-    }
-    for (int x = 0; x < lifeSize; x++) {
-      System.arraycopy(nextGeneration[x], 0, lifeGeneration[x], 0, lifeSize);
-    }
-  }
 
   // рождение фигур
   public void shapesBorn() {
@@ -99,9 +83,6 @@ public class GameField {
         // если 3 пустых соседа вокруг пустых клеток - клетка становится живой
         nextGeneration[x][y] = (count == 3) || nextGeneration[x][y];
       }
-    }
-    for (int x = 0; x < lifeSize; x++) {
-      System.arraycopy(nextGeneration[x], 0, lifeGeneration[x], 0, lifeSize);
     }
   }
 
@@ -123,9 +104,11 @@ public class GameField {
   public synchronized void shapeStateChoice(String stateName) {
     if (stateName.equals("Life")) {
       shapesBorn();
+      System.out.println("life");
     }
     if(stateName.equals("Death")) {
       shapesDeath();
+      System.out.println("death");
     }
   }
 

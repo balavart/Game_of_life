@@ -1,4 +1,4 @@
-package threads;
+package service;
 
 import gui.Canvas;
 import java.awt.Graphics;
@@ -19,7 +19,7 @@ public class DisplayThread implements Callable<Boolean> {
   }
 
   @Override
-  public Boolean call() throws Exception {
+  public Boolean call() {
     canvas.paint(g);
     return true;
   }

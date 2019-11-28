@@ -10,14 +10,13 @@ import javax.swing.JButton;
  */
 public class StartButton extends JButton {
 
-
-  public StartButton() {
-    super("Start");
+  @Override
+  public String getText() {
+    return "Start";
   }
 
   @Override
   public Color getBackground() {
     return Color.GREEN;
   }
-
 }

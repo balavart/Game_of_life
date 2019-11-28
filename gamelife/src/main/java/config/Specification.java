@@ -11,5 +11,8 @@ public class Specification {
   public static final int FIELD_SIZE = lifeSize * shapeRadius;
   public static volatile boolean goNextGeneration = false;
   public static final int SHAPE_FULLNESS = 10;
+  public static final String choiceBorn = "Life";
+  public static final String choiceDeath = "Death";
+
 
 }

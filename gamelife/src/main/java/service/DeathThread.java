@@ -1,5 +1,6 @@
-package threads;
+package service;
 
+import config.Specification;
 import gui.GameField;
 import java.util.concurrent.Callable;
 
@@ -11,16 +12,14 @@ import java.util.concurrent.Callable;
 public class DeathThread implements Callable<Boolean> {
 
   private GameField gameField;
-  private final String choiceName = "Death";
 
   public DeathThread(GameField gameField) {
     this.gameField = gameField;
   }
 
   @Override
-  public Boolean call() throws Exception {
-    gameField.shapeStateChoice(choiceName);
+  public Boolean call() {
+    gameField.shapeStateChoice(Specification.choiceDeath);
     return true;
   }
-
 }
