@@ -11,7 +11,7 @@ import javax.swing.JButton;
 public class StopButton extends JButton {
 
   public StopButton() {
-    this.setEnabled(false);
+    setEnabled(false);
   }
 
   @Override

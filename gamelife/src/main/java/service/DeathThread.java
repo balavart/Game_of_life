@@ -1,6 +1,5 @@
 package service;
 
-import gui.GameField;
 import java.util.concurrent.Callable;
 
 /**
@@ -17,6 +16,7 @@ public class DeathThread implements Callable<Boolean> {
 
   @Override
   public Boolean call() {
+    System.out.println("death");
     gameField.shapesDeath();
     return true;
   }

@@ -1,6 +1,5 @@
 package service;
 
-import gui.GameField;
 import java.util.concurrent.Callable;
 
 /**
@@ -17,6 +16,7 @@ public class LifeThread implements Callable<Boolean> {
 
   @Override
   public Boolean call() {
+    System.out.println("life");
     gameField.shapesBorn();
     return true;
   }

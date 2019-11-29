@@ -1,7 +1,7 @@
 package service;
 
 import config.Specification;
-import controller.GameController;
+import controller.GameFrameController;
 import gui.Canvas;
 import gui.GameFrame;
 import gui.buttons.ButtonsMenuBar;
@@ -19,8 +19,8 @@ public class ThreadService {
   // todo: убрать отсюда
   private GameFrame frame = new GameFrame();
   private Canvas canvas = new Canvas();
-  private ButtonsMenuBar buttonsMenuBar = new ButtonsMenuBar(canvas);
-  private GameController controller = new GameController(frame, buttonsMenuBar, canvas);
+  private ButtonsMenuBar buttonsMenuBar = new ButtonsMenuBar();
+  private GameFrameController controller = new GameFrameController(frame, buttonsMenuBar, canvas);
   private ExecutorService executorService = Executors.newFixedThreadPool(3);
   private LifeThread lifeThread = new LifeThread(controller.getGameField());
   private DeathThread deathThread = new DeathThread(controller.getGameField());
@@ -31,7 +31,6 @@ public class ThreadService {
   public void startThreads() {
 
     while (true) {
-
       try {
         while (!Specification.goNextGeneration) {
           Thread.sleep(timeDelay);

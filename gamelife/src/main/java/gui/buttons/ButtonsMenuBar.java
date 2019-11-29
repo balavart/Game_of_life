@@ -1,6 +1,6 @@
 package gui.buttons;
 
-import gui.Canvas;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -10,20 +10,17 @@ import javax.swing.JPanel;
  * @created 25.11.2019
  */
 public class ButtonsMenuBar extends JPanel {
-  JButton startButton;
-  JButton stopButton;
-  JButton clearButton;
-  Canvas canvas;
+  private JButton startButton;
+  private JButton stopButton;
+  private JButton clearButton;
 
-  public ButtonsMenuBar(Canvas canvas) {
+  public ButtonsMenuBar() {
     startButton = new StartButton();
     stopButton = new StopButton();
     clearButton = new ClearButton();
-    this.canvas = canvas;
-
-    this.add(startButton);
-    this.add(stopButton);
-    this.add(clearButton);
+    add(startButton);
+    add(stopButton);
+    add(clearButton);
   }
 
   public JButton getStartButton() {
@@ -36,5 +33,10 @@ public class ButtonsMenuBar extends JPanel {
 
   public JButton getClearButton() {
     return clearButton;
+  }
+
+  @Override
+  public Color getBackground() {
+    return Color.WHITE;
   }
 }

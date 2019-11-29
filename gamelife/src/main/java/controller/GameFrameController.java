@@ -4,30 +4,31 @@ import static config.Specification.goNextGeneration;
 import static config.Specification.lifeSize;
 
 import gui.Canvas;
-import gui.GameField;
 import gui.GameFrame;
 import gui.buttons.ButtonsMenuBar;
 import java.awt.BorderLayout;
-import javax.swing.JFrame;
+import service.GameField;
 
 /**
  * @author Vardan Balayan
  * @version 1.8
  * @created 25.11.2019
  */
-public class GameController extends JFrame {
+public class GameFrameController {
+  private GameFrame gameFrame;
   private ButtonsMenuBar buttonsPanel;
   private GameField gameField;
   private Canvas canvas;
 
-  public GameController(GameFrame gameFrame, ButtonsMenuBar buttonsPanel, Canvas canvas) {
+  public GameFrameController(GameFrame gameFrame, ButtonsMenuBar buttonsPanel, Canvas canvas) {
+    this.gameFrame = gameFrame;
     this.buttonsPanel = buttonsPanel;
     this.gameField = new GameField();
     this.canvas = canvas;
     canvas.setGameField(gameField);
 
-    gameFrame.getContentPane().add(BorderLayout.SOUTH, buttonsPanel);
-    gameFrame.getContentPane().add(BorderLayout.CENTER, canvas);
+    gameFrame.add(BorderLayout.SOUTH, buttonsPanel);
+    gameFrame.add(BorderLayout.CENTER, canvas);
 
     buttonsPanel
         .getStartButton()

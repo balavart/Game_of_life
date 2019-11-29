@@ -1,8 +1,5 @@
 package gui;
 
-import static config.Specification.SHAPE_RADIUS;
-import static config.Specification.lifeSize;
-
 import java.awt.HeadlessException;
 import javax.swing.JFrame;
 
@@ -14,14 +11,17 @@ import javax.swing.JFrame;
 public class GameFrame extends JFrame {
   private final String gameName = "Game of Life";
   private final int buttonPanelHeight = 50;
-  private final int fieldSize = lifeSize * SHAPE_RADIUS;
+  //  private final int fieldSize = lifeSize * SHAPE_RADIUS;
+  int width = 500;
+  int height = 500;
 
   public GameFrame() throws HeadlessException {
-    this.setVisible(true);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setSize(fieldSize, fieldSize + buttonPanelHeight);
-    this.setLocationRelativeTo(null);
-    this.setResizable(false);
+    setVisible(true);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //    setSize(fieldSize, fieldSize + buttonPanelHeight);
+    setSize(width, height);
+    setLocationRelativeTo(null);
+    setResizable(false);
   }
 
   @Override

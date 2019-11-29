@@ -1,4 +1,4 @@
-package gui;
+package service;
 
 import static config.Specification.lifeSize;
 
@@ -8,12 +8,16 @@ import static config.Specification.lifeSize;
  * @created 11/26/2019
  */
 public class GameField {
-  private boolean[][] lifeGeneration = new boolean[lifeSize][lifeSize];
-  private boolean[][] nextGeneration = new boolean[lifeSize][lifeSize];
+  private volatile boolean[][] lifeGeneration = new boolean[lifeSize][lifeSize];
+  private volatile boolean[][] nextGeneration = new boolean[lifeSize][lifeSize];
   private final int shapeFullness = 10;
 
-  public boolean[][] getLifeGeneration() {
+  public synchronized boolean[][] getLifeGeneration() {
     return lifeGeneration;
+  }
+
+  public synchronized boolean[][] getNextGeneration() {
+    return nextGeneration;
   }
 
   public boolean getShapeState(int x, int y) {
@@ -69,28 +73,30 @@ public class GameField {
   }
 
   // рождение фигур
-  public synchronized void shapesBorn() {
+  public void shapesBorn() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
         int count = countNeighbors(x, y);
         // если 3 пустых соседа вокруг пустых клеток - клетка становится живой
-        nextGeneration[x][y] = (count == 3) || nextGeneration[x][y];
+        getNextGeneration()[x][y] = (count == 3) || getNextGeneration()[x][y];
       }
     }
   }
 
   // смерть фигур
-  public synchronized void shapesDeath() {
+  public void shapesDeath() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
         int count = countNeighbors(x, y);
         // если 3 пустых соседа вокруг пустых клеток - клетка становится живой
-        nextGeneration[x][y] = ((count >= 2) && (count <= 4)) && nextGeneration[x][y];
+        getNextGeneration()[x][y] = ((count >= 2) && (count <= 4)) && getNextGeneration()[x][y];
       }
     }
-    // todo: не здесь должен вызываться (мб отрисовка)
+  }
+
+  public void arrCopy() {
     for (int x = 0; x < lifeSize; x++) {
-      System.arraycopy(nextGeneration[x], 0, lifeGeneration[x], 0, lifeSize);
+      System.arraycopy(getNextGeneration()[x], 0, getLifeGeneration()[x], 0, lifeSize);
     }
   }
 

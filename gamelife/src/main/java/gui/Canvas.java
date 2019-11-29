@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import service.GameField;
 
 /**
  * @author Vardan Balayan
@@ -42,6 +43,7 @@ public class Canvas extends JPanel {
   public void paint(Graphics g) {
     super.paint(g);
     g.setColor(Color.RED);
+    gameField.arrCopy();
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
         if (gameField.getLifeGeneration()[x][y]) {
