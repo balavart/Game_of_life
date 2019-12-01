@@ -1,4 +1,5 @@
-import gui.SettingsFrame2;
+import gui.SettingsFrame;
+import service.ThreadService;
 
 /**
  * @author Vardan Balayan
@@ -8,8 +9,7 @@ import gui.SettingsFrame2;
 public class StartGame {
 
   public static void main(String[] args) {
-    SettingsFrame2 settingsFrame2 = new SettingsFrame2();
-    //    ThreadService threadService = new ThreadService();
-    //    threadService.startThreads();
+    ThreadService threadService = new ThreadService();
+    threadService.startThreads();
   }
 }

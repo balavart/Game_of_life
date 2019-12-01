@@ -1,16 +1,23 @@
 package service;
 
-import static config.Specification.lifeSize;
-
 /**
+ * Core logic service.
+ *
  * @author Vardan Balayan
  * @version 1.8
  * @created 11/26/2019
  */
 public class GameField {
+
+  private final int lifeSize = 50;
   private volatile boolean[][] lifeGeneration = new boolean[lifeSize][lifeSize];
   private volatile boolean[][] nextGeneration = new boolean[lifeSize][lifeSize];
-  private final int shapeFullness = 10;
+  private int shapeFullness;
+  private int shapeScale;
+
+  public int getLifeSize() {
+    return lifeSize;
+  }
 
   public synchronized boolean[][] getLifeGeneration() {
     return lifeGeneration;
@@ -40,7 +47,19 @@ public class GameField {
     this.nextGeneration[x][y] = state;
   }
 
-  // проверка на жизнь
+  public void setShapeFullness(int shapeFullness) {
+    this.shapeFullness = shapeFullness;
+  }
+
+  public int getShapeScale() {
+    return shapeScale;
+  }
+
+  public void setShapeScale(int shapeScale) {
+    this.shapeScale = shapeScale;
+  }
+
+  /** life check. */
   public boolean isEmpty() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
@@ -52,13 +71,13 @@ public class GameField {
     return true;
   }
 
-  // посчитать количество соседей
+  /** counting the number of neighbors. */
   public int countNeighbors(int x, int y) {
     int count = 0;
-    for (int dx = -1; dx < 2; dx++) {
-      for (int dy = -1; dy < 2; dy++) {
-        int nX = x + dx;
-        int nY = y + dy;
+    for (int dX = -1; dX < 2; dX++) {
+      for (int dY = -1; dY < 2; dY++) {
+        int nX = x + dX;
+        int nY = y + dY;
         nX = (nX < 0) ? lifeSize - 1 : nX;
         nY = (nY < 0) ? lifeSize - 1 : nY;
         nX = (nX > lifeSize - 1) ? 0 : nX;
@@ -72,23 +91,22 @@ public class GameField {
     return count;
   }
 
-  // рождение фигур
+  /** birth of figures. */
   public void shapesBorn() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
         int count = countNeighbors(x, y);
-        // если 3 пустых соседа вокруг пустых клеток - клетка становится живой
         getNextGeneration()[x][y] = (count == 3) || getNextGeneration()[x][y];
       }
     }
   }
 
-  // смерть фигур
+  /** death of figures. */
   public void shapesDeath() {
     for (int x = 0; x < lifeSize; x++) {
+      //      for (int y = 0; y < lifeSizeWidth; y++) {
       for (int y = 0; y < lifeSize; y++) {
         int count = countNeighbors(x, y);
-        // если 3 пустых соседа вокруг пустых клеток - клетка становится живой
         getNextGeneration()[x][y] = ((count >= 2) && (count <= 4)) && getNextGeneration()[x][y];
       }
     }
@@ -100,7 +118,7 @@ public class GameField {
     }
   }
 
-  // рандомное заполнение фигурами
+  /** random shape filling. */
   public void fillingByShapes() {
     for (int x = 0; x < lifeSize; x++) {
       for (int y = 0; y < lifeSize; y++) {
@@ -109,12 +127,10 @@ public class GameField {
     }
   }
 
-  // очистка фигур
+  /** cleaning figures. */
   public void shapesCleaning() {
     for (int x = 0; x < lifeSize; x++) {
-      for (int y = 0; y < lifeSize; y++) {
-        lifeGeneration[x][y] = nextGeneration[x][y];
-      }
+      System.arraycopy(nextGeneration[x], 0, lifeGeneration[x], 0, lifeSize);
     }
   }
 }

@@ -5,11 +5,17 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
+ * JPanel for buttons: "Start", "Stop" and "Clear".
+ *
+ * @see StartButton
+ * @see StopButton
+ * @see ClearButton
  * @author Vardan Balayan
  * @version 1.8
- * @created 25.11.2019
+ * @created 11/25/2019
  */
 public class ButtonsMenuBar extends JPanel {
+
   private JButton startButton;
   private JButton stopButton;
   private JButton clearButton;
