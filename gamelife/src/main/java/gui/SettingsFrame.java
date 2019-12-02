@@ -51,7 +51,7 @@ public class SettingsFrame extends JFrame {
           if (!widthTextField.getText().chars().allMatch(Character::isDigit)
               || !heightTextField.getText().chars().allMatch(Character::isDigit)
               || !percentFullnessTextField.getText().chars().allMatch(Character::isDigit)) {
-            System.err.println("Non-numeric value. Type number value");
+            System.err.println("Non-numeric value. Type number value.");
             return;
           }
 
@@ -67,10 +67,10 @@ public class SettingsFrame extends JFrame {
           }
 
           if (percentShapeFullness <= 10) {
-            System.err.println("Field completion percentage is too low. Type another number");
+            System.err.println("Field completion percentage is too low. Type another number.");
             return;
           } else if (percentShapeFullness > 100) {
-            System.err.println("Field completion percentage is too hight. Type another number");
+            System.err.println("Field completion percentage is too hight. Type another number.");
             return;
           } else {
             gameField.setShapeFullness(percentShapeFullness / 2);
