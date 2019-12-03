@@ -5,7 +5,7 @@ import gui.GameFrame;
 import gui.SettingsFrame;
 import gui.buttons.ButtonsMenuBar;
 import java.awt.BorderLayout;
-import service.GameField;
+import service.GameFieldImplementation;
 
 /**
  * Controller class binds objects and assigns actions to buttons.
@@ -14,28 +14,22 @@ import service.GameField;
  * @version 1.8
  * @created 11/25/2019
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class GameFrameController {
 
-  private GameFrame gameFrame;
-  private ButtonsMenuBar buttonsPanel;
-  private GameField gameField;
-  private SettingsFrame settingsFrame;
-  private Canvas canvas;
+  private GameFieldImplementation gameFieldImplementation;
   private boolean goNextGeneration = false;
 
   /** creates action listeners for each button. */
+  @SuppressWarnings({"checkstyle:SeparatorWrap", "CheckStyle"})
   public GameFrameController(
       SettingsFrame settingsFrame,
       GameFrame gameFrame,
       ButtonsMenuBar buttonsPanel,
       Canvas canvas) {
-    this.gameFrame = gameFrame;
-    this.buttonsPanel = buttonsPanel;
-    this.gameField = new GameField();
-    this.settingsFrame = settingsFrame;
-    settingsFrame.setGameField(gameField);
-    this.canvas = canvas;
-    canvas.setGameField(gameField);
+    this.gameFieldImplementation = new GameFieldImplementation();
+    settingsFrame.setGameFieldImplementation(gameFieldImplementation);
+    canvas.setGameFieldImplementation(gameFieldImplementation);
 
     gameFrame.add(BorderLayout.SOUTH, buttonsPanel);
     gameFrame.add(BorderLayout.CENTER, canvas);
@@ -49,10 +43,10 @@ public class GameFrameController {
               buttonsPanel.getStartButton().setEnabled(false);
               buttonsPanel.getStopButton().setEnabled(true);
               buttonsPanel.getClearButton().setEnabled(false);
-              if (gameField.isEmpty()) {
-                gameField.fillingByShapes();
+              if (gameFieldImplementation.isEmpty()) {
+                gameFieldImplementation.randomFillingByShapes();
               } else {
-                gameField.shapesCleaning();
+                gameFieldImplementation.shapesCleaning();
               }
             });
 
@@ -73,16 +67,18 @@ public class GameFrameController {
             e -> {
               buttonsPanel.getStartButton().setEnabled(true);
               buttonsPanel.getStopButton().setEnabled(false);
-              gameField.setLifeGeneration(
-                  new boolean[gameField.getLifeSize()][gameField.getLifeSize()]);
-              gameField.setNextGeneration(
-                  new boolean[gameField.getLifeSize()][gameField.getLifeSize()]);
+              gameFieldImplementation.setLifeGeneration(
+                  new boolean[gameFieldImplementation.getLifeSize()]
+                      [gameFieldImplementation.getLifeSize()]);
+              gameFieldImplementation.setNextGeneration(
+                  new boolean[gameFieldImplementation.getLifeSize()]
+                      [gameFieldImplementation.getLifeSize()]);
               canvas.repaint();
             });
   }
 
-  public GameField getGameField() {
-    return gameField;
+  public GameFieldImplementation getGameFieldImplementation() {
+    return gameFieldImplementation;
   }
 
   public boolean isGoNextGeneration() {

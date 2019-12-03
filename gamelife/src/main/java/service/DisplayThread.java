@@ -1,7 +1,6 @@
 package service;
 
 import gui.Canvas;
-import java.awt.Graphics;
 import java.util.concurrent.Callable;
 
 /**
@@ -14,7 +13,6 @@ import java.util.concurrent.Callable;
 public class DisplayThread implements Callable<Boolean> {
 
   private Canvas canvas;
-  private Graphics g;
 
   public DisplayThread(Canvas canvas) {
     this.canvas = canvas;
@@ -22,7 +20,7 @@ public class DisplayThread implements Callable<Boolean> {
 
   @Override
   public Boolean call() {
-    canvas.paint(g);
+    canvas.paint(canvas.getGraphics());
     return true;
   }
 }

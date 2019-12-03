@@ -1,12 +1,13 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.HeadlessException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import service.GameField;
+import service.GameFieldImplementation;
 
 /**
  * JFrame for assigning initial settings.
@@ -25,14 +26,9 @@ public class SettingsFrame extends JFrame {
   private JLabel percentFullnessLabel;
   private JPanel settingMenuBar;
   private JButton confirmButton;
-  private JFrame gameframe;
-  private GameField gameField;
+  private GameFieldImplementation gameFieldImplementation;
 
-  /**
-   * sets values for Game JFrame. Assigns action to button. Contains verification conditions.
-   *
-   * @see GameFrame
-   */
+  /** sets values for Game JFrame. Assigns action to button. Contains verification conditions. */
   public SettingsFrame(JFrame gameframe) throws HeadlessException {
     setVisible(true);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +36,6 @@ public class SettingsFrame extends JFrame {
     setSize(300, 250);
     setLocationRelativeTo(null);
     setResizable(false);
-    this.gameframe = gameframe;
     add(settingMenuBar);
     widthTextField.setText("500");
     heightTextField.setText("500");
@@ -62,7 +57,7 @@ public class SettingsFrame extends JFrame {
           if ((width >= 225 && width <= 1920) && (height >= 100 && height <= 1030)) {
             gameframe.setSize(width, height);
           } else {
-            System.err.println("Window sizes are too low or too hight. Type other sizes.");
+            System.err.println("Window sizes are too low or too high. Type other sizes.");
             return;
           }
 
@@ -70,22 +65,25 @@ public class SettingsFrame extends JFrame {
             System.err.println("Field completion percentage is too low. Type another number.");
             return;
           } else if (percentShapeFullness > 100) {
-            System.err.println("Field completion percentage is too hight. Type another number.");
+            System.err.println("Field completion percentage is too high. Type another number.");
             return;
           } else {
-            gameField.setShapeFullness(percentShapeFullness / 2);
+            gameFieldImplementation.setShapeFullness(percentShapeFullness / 2);
           }
 
           setVisible(false);
           gameframe.setVisible(true);
           gameframe.setLocationRelativeTo(null);
           gameframe.setResizable(false);
-          gameField.setShapeScale(
-              (Math.max(width / gameField.getLifeSize(), height / gameField.getLifeSize())) + 1);
+          gameFieldImplementation.setShapeScale(
+              (Math.max(
+                      width / gameFieldImplementation.getLifeSize(),
+                      height / gameFieldImplementation.getLifeSize()))
+                  + 1);
         });
   }
 
-  public void setGameField(GameField gameField) {
-    this.gameField = gameField;
+  public void setGameFieldImplementation(GameFieldImplementation gameFieldImplementation) {
+    this.gameFieldImplementation = gameFieldImplementation;
   }
 }

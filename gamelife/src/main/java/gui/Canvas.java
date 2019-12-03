@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-import service.GameField;
+import service.GameFieldImplementation;
 
 /**
  * JPanel for drawing shapes.
@@ -16,7 +16,7 @@ import service.GameField;
  */
 public class Canvas extends JPanel {
 
-  private GameField gameField;
+  private GameFieldImplementation gameFieldImplementation;
 
   /** assigns action to mouse click. */
   public Canvas() {
@@ -25,10 +25,11 @@ public class Canvas extends JPanel {
           @Override
           public void mousePressed(MouseEvent e) {
             super.mousePressed(e);
-            int x = e.getX() / gameField.getShapeScale();
-            int y = e.getY() / gameField.getShapeScale();
-            gameField.toggleLifeGeneration(x, y);
-            gameField.setNextGeneration(x, y, gameField.getShapeState(x, y));
+            int x = e.getX() / gameFieldImplementation.getShapeScale();
+            int y = e.getY() / gameFieldImplementation.getShapeScale();
+            gameFieldImplementation.toggleLifeGeneration(x, y);
+            gameFieldImplementation.setNextGeneration(
+                x, y, gameFieldImplementation.getShapeState(x, y));
             repaint();
           }
         });
@@ -36,29 +37,29 @@ public class Canvas extends JPanel {
 
   @Override
   public Color getBackground() {
-    return Color.PINK;
+    return new Color(222, 184, 135);
   }
 
   /** drawing shapes. */
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    g.setColor(Color.RED);
-    gameField.arrCopy();
-    for (int x = 0; x < gameField.getLifeSize(); x++) {
-      for (int y = 0; y < gameField.getLifeSize(); y++) {
-        if (gameField.getLifeGeneration()[x][y]) {
+    g.setColor(new Color(139, 69, 19));
+    gameFieldImplementation.shapesCleaning();
+    for (int x = 0; x < gameFieldImplementation.getLifeSize(); x++) {
+      for (int y = 0; y < gameFieldImplementation.getLifeSize(); y++) {
+        if (gameFieldImplementation.getLifeGeneration()[x][y]) {
           g.fillOval(
-              x * gameField.getShapeScale(),
-              y * gameField.getShapeScale(),
-              gameField.getShapeScale(),
-              gameField.getShapeScale());
+              x * gameFieldImplementation.getShapeScale(),
+              y * gameFieldImplementation.getShapeScale(),
+              gameFieldImplementation.getShapeScale(),
+              gameFieldImplementation.getShapeScale());
         }
       }
     }
   }
 
-  public void setGameField(GameField gameField) {
-    this.gameField = gameField;
+  public void setGameFieldImplementation(GameFieldImplementation gameFieldImplementation) {
+    this.gameFieldImplementation = gameFieldImplementation;
   }
 }

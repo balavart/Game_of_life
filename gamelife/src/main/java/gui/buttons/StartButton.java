@@ -19,6 +19,6 @@ public class StartButton extends JButton {
 
   @Override
   public Color getBackground() {
-    return Color.GREEN;
+    return new Color(154, 205, 50);
   }
 }

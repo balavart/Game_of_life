@@ -20,6 +20,7 @@ public class ButtonsMenuBar extends JPanel {
   private JButton stopButton;
   private JButton clearButton;
 
+  /** Instantiates a new Buttons menu bar. */
   public ButtonsMenuBar() {
     startButton = new StartButton();
     stopButton = new StopButton();

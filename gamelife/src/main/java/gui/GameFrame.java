@@ -12,7 +12,7 @@ import javax.swing.JFrame;
  */
 public class GameFrame extends JFrame {
 
-  private final String gameName = "Game of Life";
+  private static final String GAME_OF_LIFE = "Game of Life";
 
   public GameFrame() throws HeadlessException {
     setVisible(false);
@@ -21,6 +21,6 @@ public class GameFrame extends JFrame {
 
   @Override
   public String getTitle() {
-    return gameName;
+    return GAME_OF_LIFE;
   }
 }

@@ -25,6 +25,6 @@ public class StopButton extends JButton {
 
   @Override
   public Color getBackground() {
-    return Color.RED;
+    return new Color(188, 143, 143);
   }
 }

@@ -26,22 +26,24 @@ public class ThreadService {
   private GameFrameController controller =
       new GameFrameController(settingsFrame, gameFrame, buttonsMenuBar, canvas);
   private ExecutorService executorService = Executors.newFixedThreadPool(3);
-  private LifeThread lifeThread = new LifeThread(controller.getGameField());
-  private DeathThread deathThread = new DeathThread(controller.getGameField());
+  private LifeThread lifeThread = new LifeThread(controller.getGameFieldImplementation());
+  private DeathThread deathThread = new DeathThread(controller.getGameFieldImplementation());
   private DisplayThread displayThread = new DisplayThread(canvas);
 
-  private int timeDelay = 100;
+  private static final int TIME_DELAY = 100;
 
+  /** Start threads. */
   public void startThreads() {
+    //noinspection InfiniteLoopStatement
     while (true) {
       try {
         while (!controller.isGoNextGeneration()) {
-          Thread.sleep(timeDelay);
+          Thread.sleep(TIME_DELAY);
         }
         executorService.invokeAll(Arrays.asList(lifeThread, deathThread));
         executorService.invokeAll(Collections.singletonList(displayThread));
         canvas.repaint();
-        Thread.sleep(timeDelay);
+        Thread.sleep(TIME_DELAY);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
