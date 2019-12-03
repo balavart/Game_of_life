@@ -26,8 +26,8 @@ public class ThreadService {
   private GameFrameController controller =
       new GameFrameController(settingsFrame, gameFrame, buttonsMenuBar, canvas);
   private ExecutorService executorService = Executors.newFixedThreadPool(3);
-  private LifeThread lifeThread = new LifeThread(controller.getGameFieldImplementation());
-  private DeathThread deathThread = new DeathThread(controller.getGameFieldImplementation());
+  private LifeThread lifeThread = new LifeThread(controller.getGameField());
+  private DeathThread deathThread = new DeathThread(controller.getGameField());
   private DisplayThread displayThread = new DisplayThread(canvas);
 
   private static final int TIME_DELAY = 100;

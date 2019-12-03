@@ -5,6 +5,7 @@ import gui.GameFrame;
 import gui.SettingsFrame;
 import gui.buttons.ButtonsMenuBar;
 import java.awt.BorderLayout;
+import service.GameField;
 import service.GameFieldImplementation;
 
 /**
@@ -17,7 +18,7 @@ import service.GameFieldImplementation;
 @SuppressWarnings("FieldCanBeLocal")
 public class GameFrameController {
 
-  private GameFieldImplementation gameFieldImplementation;
+  private GameField gameField;
   private boolean goNextGeneration = false;
 
   /** creates action listeners for each button. */
@@ -27,9 +28,9 @@ public class GameFrameController {
       GameFrame gameFrame,
       ButtonsMenuBar buttonsPanel,
       Canvas canvas) {
-    this.gameFieldImplementation = new GameFieldImplementation();
-    settingsFrame.setGameFieldImplementation(gameFieldImplementation);
-    canvas.setGameFieldImplementation(gameFieldImplementation);
+    this.gameField = new GameFieldImplementation();
+    settingsFrame.setGameField(gameField);
+    canvas.setGameField(gameField);
 
     gameFrame.add(BorderLayout.SOUTH, buttonsPanel);
     gameFrame.add(BorderLayout.CENTER, canvas);
@@ -43,10 +44,10 @@ public class GameFrameController {
               buttonsPanel.getStartButton().setEnabled(false);
               buttonsPanel.getStopButton().setEnabled(true);
               buttonsPanel.getClearButton().setEnabled(false);
-              if (gameFieldImplementation.isEmpty()) {
-                gameFieldImplementation.randomFillingByShapes();
+              if (gameField.isEmpty()) {
+                gameField.randomFillingByShapes();
               } else {
-                gameFieldImplementation.shapesCleaning();
+                gameField.shapesCleaning();
               }
             });
 
@@ -67,18 +68,16 @@ public class GameFrameController {
             e -> {
               buttonsPanel.getStartButton().setEnabled(true);
               buttonsPanel.getStopButton().setEnabled(false);
-              gameFieldImplementation.setLifeGeneration(
-                  new boolean[gameFieldImplementation.getLifeSize()]
-                      [gameFieldImplementation.getLifeSize()]);
-              gameFieldImplementation.setNextGeneration(
-                  new boolean[gameFieldImplementation.getLifeSize()]
-                      [gameFieldImplementation.getLifeSize()]);
+              gameField.setLifeGeneration(
+                  new boolean[gameField.getLifeSize()][gameField.getLifeSize()]);
+              gameField.setNextGeneration(
+                  new boolean[gameField.getLifeSize()][gameField.getLifeSize()]);
               canvas.repaint();
             });
   }
 
-  public GameFieldImplementation getGameFieldImplementation() {
-    return gameFieldImplementation;
+  public GameField getGameField() {
+    return gameField;
   }
 
   public boolean isGoNextGeneration() {

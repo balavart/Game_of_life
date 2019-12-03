@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-import service.GameFieldImplementation;
+import service.GameField;
 
 /**
  * JPanel for drawing shapes.
@@ -16,7 +16,7 @@ import service.GameFieldImplementation;
  */
 public class Canvas extends JPanel {
 
-  private GameFieldImplementation gameFieldImplementation;
+  private GameField gameField;
 
   /** assigns action to mouse click. */
   public Canvas() {
@@ -25,11 +25,10 @@ public class Canvas extends JPanel {
           @Override
           public void mousePressed(MouseEvent e) {
             super.mousePressed(e);
-            int x = e.getX() / gameFieldImplementation.getShapeScale();
-            int y = e.getY() / gameFieldImplementation.getShapeScale();
-            gameFieldImplementation.toggleLifeGeneration(x, y);
-            gameFieldImplementation.setNextGeneration(
-                x, y, gameFieldImplementation.getShapeState(x, y));
+            int x = e.getX() / gameField.getShapeScale();
+            int y = e.getY() / gameField.getShapeScale();
+            gameField.toggleLifeGeneration(x, y);
+            gameField.setNextGeneration(x, y, gameField.getShapeState(x, y));
             repaint();
           }
         });
@@ -45,21 +44,21 @@ public class Canvas extends JPanel {
   public void paint(Graphics g) {
     super.paint(g);
     g.setColor(new Color(139, 69, 19));
-    gameFieldImplementation.shapesCleaning();
-    for (int x = 0; x < gameFieldImplementation.getLifeSize(); x++) {
-      for (int y = 0; y < gameFieldImplementation.getLifeSize(); y++) {
-        if (gameFieldImplementation.getLifeGeneration()[x][y]) {
+    gameField.shapesCleaning();
+    for (int x = 0; x < gameField.getLifeSize(); x++) {
+      for (int y = 0; y < gameField.getLifeSize(); y++) {
+        if (gameField.getLifeGeneration()[x][y]) {
           g.fillOval(
-              x * gameFieldImplementation.getShapeScale(),
-              y * gameFieldImplementation.getShapeScale(),
-              gameFieldImplementation.getShapeScale(),
-              gameFieldImplementation.getShapeScale());
+              x * gameField.getShapeScale(),
+              y * gameField.getShapeScale(),
+              gameField.getShapeScale(),
+              gameField.getShapeScale());
         }
       }
     }
   }
 
-  public void setGameFieldImplementation(GameFieldImplementation gameFieldImplementation) {
-    this.gameFieldImplementation = gameFieldImplementation;
+  public void setGameField(GameField gameField) {
+    this.gameField = gameField;
   }
 }

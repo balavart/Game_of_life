@@ -20,14 +20,14 @@ import org.junit.jupiter.api.Test;
  */
 class GameFieldImplementationTest {
 
-  private static GameFieldImplementation gameFieldImplementationTest;
+  private static GameField gameField;
   private boolean[][] testGeneration;
   private static int testsCount;
 
   /** Before all. */
   @BeforeAll
   static void beforeAll() {
-    gameFieldImplementationTest = new GameFieldImplementation();
+    gameField = new GameFieldImplementation();
     testsCount = 1;
     System.out.println("Start " + GameFieldImplementation.class.getSimpleName() + " class testing");
   }
@@ -54,14 +54,14 @@ class GameFieldImplementationTest {
   @Test
   void isEmpty() {
     testGeneration =
-        new boolean[gameFieldImplementationTest.getLifeSize()]
-            [gameFieldImplementationTest.getLifeSize()];
+        new boolean[gameField.getLifeSize()]
+            [gameField.getLifeSize()];
 
     for (boolean[] booleans : testGeneration) {
       Arrays.fill(booleans, false);
     }
-    gameFieldImplementationTest.setLifeGeneration(testGeneration);
-    assertTrue(gameFieldImplementationTest.isEmpty());
+    gameField.setLifeGeneration(testGeneration);
+    assertTrue(gameField.isEmpty());
     testsCount++;
   }
 
@@ -69,14 +69,14 @@ class GameFieldImplementationTest {
   @Test
   void countNeighbors() {
     testGeneration =
-        new boolean[gameFieldImplementationTest.getLifeSize()]
-            [gameFieldImplementationTest.getLifeSize()];
+        new boolean[gameField.getLifeSize()]
+            [gameField.getLifeSize()];
 
     for (boolean[] booleans : testGeneration) {
       Arrays.fill(booleans, true);
     }
-    gameFieldImplementationTest.setLifeGeneration(testGeneration);
-    assertEquals(8, gameFieldImplementationTest.countNeighbors(1, 1));
+    gameField.setLifeGeneration(testGeneration);
+    assertEquals(8, gameField.countNeighbors(1, 1));
     testsCount++;
   }
 
@@ -84,14 +84,14 @@ class GameFieldImplementationTest {
   @Test
   void shapesBorn() {
     testGeneration =
-        new boolean[gameFieldImplementationTest.getLifeSize()]
-            [gameFieldImplementationTest.getLifeSize()];
+        new boolean[gameField.getLifeSize()]
+            [gameField.getLifeSize()];
 
     for (boolean[] booleans : testGeneration) {
       Arrays.fill(booleans, true);
     }
-    gameFieldImplementationTest.setNextGeneration(testGeneration);
-    assertTrue(gameFieldImplementationTest.shapesBorn()[1][1]);
+    gameField.setNextGeneration(testGeneration);
+    assertTrue(gameField.shapesBorn()[1][1]);
     testsCount++;
   }
 
@@ -99,14 +99,14 @@ class GameFieldImplementationTest {
   @Test
   void shapesDeath() {
     testGeneration =
-        new boolean[gameFieldImplementationTest.getLifeSize()]
-            [gameFieldImplementationTest.getLifeSize()];
+        new boolean[gameField.getLifeSize()]
+            [gameField.getLifeSize()];
 
     for (boolean[] booleans : testGeneration) {
       Arrays.fill(booleans, false);
     }
-    gameFieldImplementationTest.setNextGeneration(testGeneration);
-    assertFalse(gameFieldImplementationTest.shapesDeath()[1][1]);
+    gameField.setNextGeneration(testGeneration);
+    assertFalse(gameField.shapesDeath()[1][1]);
     testsCount++;
   }
 
@@ -114,14 +114,14 @@ class GameFieldImplementationTest {
   @Test
   void shapesCleaning() {
     testGeneration =
-        new boolean[gameFieldImplementationTest.getLifeSize()]
-            [gameFieldImplementationTest.getLifeSize()];
+        new boolean[gameField.getLifeSize()]
+            [gameField.getLifeSize()];
 
     for (boolean[] booleans : testGeneration) {
       Arrays.fill(booleans, false);
     }
-    gameFieldImplementationTest.setNextGeneration(testGeneration);
-    assertFalse(gameFieldImplementationTest.shapesCleaning()[1][1]);
+    gameField.setNextGeneration(testGeneration);
+    assertFalse(gameField.shapesCleaning()[1][1]);
     testsCount++;
   }
 }

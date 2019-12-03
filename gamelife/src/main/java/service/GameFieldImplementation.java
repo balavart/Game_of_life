@@ -16,46 +16,57 @@ public class GameFieldImplementation implements GameField {
   private int shapeFullness;
   private int shapeScale;
 
+  @Override
   public int getLifeSize() {
     return LIFE_SIZE;
   }
 
+  @Override
   public synchronized boolean[][] getLifeGeneration() {
     return lifeGeneration;
   }
 
+  @Override
   public synchronized boolean[][] getNextGeneration() {
     return nextGeneration;
   }
 
+  @Override
   public boolean getShapeState(int x, int y) {
     return lifeGeneration[x][y];
   }
 
+  @Override
   public void setLifeGeneration(boolean[][] lifeGeneration) {
     this.lifeGeneration = lifeGeneration;
   }
 
+  @Override
   public void toggleLifeGeneration(int x, int y) {
     this.lifeGeneration[x][y] = !this.lifeGeneration[x][y];
   }
 
+  @Override
   public void setNextGeneration(boolean[][] nextGeneration) {
     this.nextGeneration = nextGeneration;
   }
 
+  @Override
   public void setNextGeneration(int x, int y, boolean state) {
     this.nextGeneration[x][y] = state;
   }
 
+  @Override
   public void setShapeFullness(int shapeFullness) {
     this.shapeFullness = shapeFullness;
   }
 
+  @Override
   public int getShapeScale() {
     return shapeScale;
   }
 
+  @Override
   public void setShapeScale(int shapeScale) {
     this.shapeScale = shapeScale;
   }

@@ -10,6 +10,28 @@ package service;
  */
 public interface GameField {
 
+  int getLifeSize();
+
+  boolean[][] getLifeGeneration();
+
+  boolean[][] getNextGeneration();
+
+  boolean getShapeState(int x, int y);
+
+  void setLifeGeneration(boolean[][] lifeGeneration);
+
+  void toggleLifeGeneration(int x, int y);
+
+  void setNextGeneration(boolean[][] nextGeneration);
+
+  void setNextGeneration(int x, int y, boolean state);
+
+  void setShapeFullness(int shapeFullness);
+
+  int getShapeScale();
+
+  void setShapeScale(int shapeScale);
+
   /** life check. */
   boolean isEmpty();
 

@@ -11,15 +11,15 @@ import java.util.concurrent.Callable;
  */
 public class DeathThread implements Callable<Boolean> {
 
-  private GameFieldImplementation gameFieldImplementation;
+  private GameField gameField;
 
-  public DeathThread(GameFieldImplementation gameFieldImplementation) {
-    this.gameFieldImplementation = gameFieldImplementation;
+  public DeathThread(GameField gameField) {
+    this.gameField = gameField;
   }
 
   @Override
   public Boolean call() {
-    gameFieldImplementation.shapesDeath();
+    gameField.shapesDeath();
     return true;
   }
 }

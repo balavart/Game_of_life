@@ -11,15 +11,15 @@ import java.util.concurrent.Callable;
  */
 public class LifeThread implements Callable<Boolean> {
 
-  private GameFieldImplementation gameFieldImplementation;
+  private GameField gameField;
 
-  public LifeThread(GameFieldImplementation gameFieldImplementation) {
-    this.gameFieldImplementation = gameFieldImplementation;
+  public LifeThread(GameField gameField) {
+    this.gameField = gameField;
   }
 
   @Override
   public Boolean call() {
-    gameFieldImplementation.shapesBorn();
+    gameField.shapesBorn();
     return true;
   }
 }
