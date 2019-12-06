@@ -5,7 +5,7 @@ import service.ThreadService;
  *
  * @author Vardan Balayan
  * @version 1.8
- * @created 11 /20/2019
+ * @created 11/20/2019
  */
 public class StartGame {
 
