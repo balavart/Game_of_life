@@ -1,37 +1,64 @@
 package gui;
 
-import static gamelogic.Specification.LIFE_SIZE;
-import static gamelogic.Specification.SHAPE_RADIUS;
-import static gamelogic.Specification.lifeGeneration;
-
-import gamelogic.Life;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javafx.scene.input.MouseButton;
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputAdapter;
+import service.GameField;
 
 /**
+ * JPanel for drawing shapes.
+ *
  * @author Vardan Balayan
  * @version 1.8
  * @created 11/21/2019
  */
-// paint on the canvas
 public class Canvas extends JPanel {
 
+  private GameField gameField;
+
+  /** assigns action to mouse click. */
+  public Canvas() {
+    this.addMouseListener(
+        new MouseAdapter() {
+          @Override
+          public void mousePressed(MouseEvent e) {
+            super.mousePressed(e);
+            int x = e.getX() / gameField.getShapeScale();
+            int y = e.getY() / gameField.getShapeScale();
+            gameField.toggleLifeGeneration(x, y);
+            gameField.setNextGeneration(x, y, gameField.getShapeState(x, y));
+            repaint();
+          }
+        });
+  }
+
+  @Override
+  public Color getBackground() {
+    return new Color(222, 184, 135);
+  }
+
+  /** drawing shapes. */
   @Override
   public void paint(Graphics g) {
     super.paint(g);
-    g.setColor(Color.MAGENTA);
-
-    for (int x = 0; x < LIFE_SIZE; x++) {
-      for (int y = 0; y < LIFE_SIZE; y++) {
-        if (lifeGeneration[x][y]) {
-          g.fillOval(x * SHAPE_RADIUS, y * SHAPE_RADIUS, SHAPE_RADIUS, SHAPE_RADIUS);
+    g.setColor(new Color(139, 69, 19));
+    gameField.shapesCleaning();
+    for (int x = 0; x < gameField.getLifeSize(); x++) {
+      for (int y = 0; y < gameField.getLifeSize(); y++) {
+        if (gameField.getLifeGeneration()[x][y]) {
+          g.fillOval(
+              x * gameField.getShapeScale(),
+              y * gameField.getShapeScale(),
+              gameField.getShapeScale(),
+              gameField.getShapeScale());
         }
       }
     }
+  }
+
+  public void setGameField(GameField gameField) {
+    this.gameField = gameField;
   }
 }
